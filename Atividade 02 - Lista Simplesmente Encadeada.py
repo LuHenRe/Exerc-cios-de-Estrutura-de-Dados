@@ -37,17 +37,15 @@ class SingleLinkedList:
             print(lista)       # "10 -> 20 -> 30"
         """
         # SEU CÓDIGO AQUI.
-        if self.size == 0:
-          self.head, self.tail = str(data), str(data)
+        new_node = Node(data)
+        
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
         else:
-          self.next = self.tail
-          old_tail = self.tail
-          
-          self.tail = data
+            self.tail.next = new_node
+            self.tail = new_node
             
-        
-        
-        
         self.size += 1
 
     def insert(self, index, data):
@@ -70,7 +68,31 @@ class SingleLinkedList:
             print(lista)          # "5 -> 11 -> 23 -> 7"
         """
        # SEU CÓDIGO AQUI.
-       #as
+        if index < 0 or index > self.size:
+            raise IndexError("Índice fora dos limites")
+
+        if index == 0:
+            new_node = Node(data)
+            new_node.next = self.head
+            self.head = new_node
+            if self.size == 0:
+                self.tail = new_node
+            self.size += 1
+            return
+
+        if index == self.size:
+            self.append(data)
+            return
+
+        new_node = Node(data)
+        current = self.head
+        for _ in range(index - 1):
+            current = current.next
+        
+        new_node.next = current.next
+        current.next = new_node
+        
+        self.size += 1
 
     def __str__(self):
         """
